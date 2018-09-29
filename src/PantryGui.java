@@ -3,6 +3,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.List;
 
 /*
  * Author: Thomas Lloyd
@@ -16,7 +24,8 @@ public class PantryGui extends JFrame {
   private JPasswordField passPass;
   private JTextField txtUser;
   private int attempt = 1;
-
+  private static String[][] login2dArray;
+  private static String email;
 
   /**
    * Launch the application.
@@ -30,8 +39,80 @@ public class PantryGui extends JFrame {
         e.printStackTrace();
       }
     });
-  }
+    
+    //Get credentials from Login.txt file and create 2D array of data
+    try{
+      Scanner loginFile = null;
+      List<String> temps = new ArrayList<String>();
 
+      //try to open file, catch exception
+      try {
+          loginFile = new Scanner(new File("Login.txt"));
+      } catch (FileNotFoundException fnf) {
+          Logger.getLogger(PantryGui.class.getName()).log(Level.SEVERE, null, fnf);
+      }
+
+      //try to read file, finally block to close in case of fail
+      try{
+          while(loginFile.hasNextLine()){
+              String token = loginFile.next();
+              temps.add(token);
+          }
+              loginFile.close();
+              //create 1D array
+              String[] loginArray = temps.toArray(new String[0]);
+              
+              //create 2D array
+              login2dArray = new String[temps.size()][];
+              for(int i = 0; i < login2dArray.length; i++){
+                  String[] row = temps.get(i).split("\\|");
+                  login2dArray [i] = row;
+              }
+              
+              //these lines were to test array storage was correct
+              //for(int j = 0; j < login2dArray.length; j++){
+                  //for(int k = 0; k < login2dArray[j].length; k++){
+                      //System.out.println(login2dArray[j][k]);
+                  //}
+              //}
+              
+      }finally{
+          loginFile.close();
+      }
+
+    //catch any other exceptions?  A little vague
+    }catch(Exception e){
+        Logger.getLogger(PantryGui.class.getName()).log(Level.SEVERE, null, e);
+    }
+    
+  }
+  
+  public boolean validCreds(String username, String password){
+        boolean isValid = false;
+        
+        for(int i = 0; i < login2dArray.length; i++){
+            for(int j = 0; j < 3; j++){
+                if(username.equalsIgnoreCase(login2dArray[i][0])){
+                    if(password.equals(login2dArray[i][1])){
+                        isValid = true;
+                    }
+                }
+            }
+        }
+        return isValid;
+    }
+  
+  public String getEmail(String username){
+      for(int i = 0; i < login2dArray.length; i++){
+            for(int j = 0; j < 4; j++){
+                if(username.equalsIgnoreCase(login2dArray[i][0])){
+                    email = login2dArray[i][2];
+                }
+            }
+        }
+      return email;
+  }
+  
   /**
    * Create the frame.
    */
@@ -86,27 +167,38 @@ public class PantryGui extends JFrame {
     btnLogin.setForeground(Color.BLACK);
     btnLogin.addActionListener(ignored -> {
 
-      //Hardcoded username and password to test functionality
-      //needs to be replaced with DB
-      //Declare username and password (hard code bad!)
-      String username = txtUser.getText();
-      String password = String.valueOf(passPass.getPassword());
+    //Hardcoded username and password to test functionality
+    //needs to be replaced with DB
+    //Declare username and password (hard code bad!)
+    String username = txtUser.getText();
+    String password = String.valueOf(passPass.getPassword());
 
-      //Checks username and password
-      //username = student
-      //password = password
-      if (attempt < 3 && "student".equals(username) && "password".equals(password)) {
+      
+      if (attempt < 3 && validCreds(username, password)) {
+        //On successful login, send email
+        //Need to figure out how to create list of expired items here
+        
+        //get email address from login2dArray
+        email = getEmail(username);
+        
+        //pass username and email to SendEmail Class
+        SendEmail expired = new SendEmail(username, email);
+          
         //if username and password are correct then a welcome message appears
         //TAKES USER TO NEXT GUI
         TaskGui task = new TaskGui();
         task.setVisible(true);
         //closes login gui
         dispose();
-      } else if (attempt >= 3) { //If the username or password are incorrect then an error message will appear
+      } else if (attempt < 3) { //If the username or password are incorrect then an error message will appear
         JOptionPane.showMessageDialog(null,  "Sorry! Incorrect Username and/or Password. Attempt: " + attempt + " of 3.");
       } else {
         //Making the text fields unusable and the Login button invisible
-        JOptionPane.showMessageDialog(null, "You have exceeded your allotted attempts");
+        
+        JOptionPane.showMessageDialog(null, "Sorry! Incorrect Username and/or"
+                        + " Password. Attempt: " + attempt + " of 3.\n"
+                            +"You have reached max attempts and you must restart"
+                                + " the program.");
         txtUser.setEditable(false);
         passPass.setEditable(false);
         btnLogin.setVisible(false);
@@ -142,5 +234,5 @@ public class PantryGui extends JFrame {
 
     btnClear.setBounds(159, 239, 104, 39);
     contentPane.add(btnClear);
+  }  
   }
-}
