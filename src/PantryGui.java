@@ -30,13 +30,12 @@ public class PantryGui extends JFrame {
         e.printStackTrace();
       }
     });
-
   }
 
   /**
    * Create the frame.
    */
-  private PantryGui() {
+  PantryGui() {
 
     setTitle("Pennywise Pantry");
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -96,24 +95,22 @@ public class PantryGui extends JFrame {
       //Checks username and password
       //username = student
       //password = password
-      if(attempt < 3 && username.equals("student") && password.equals("password")) {
+      if (attempt < 3 && "student".equals(username) && "password".equals(password)) {
         //if username and password are correct then a welcome message appears
-        //SHOULD TAKE USER TO NEXT GUI
-        JOptionPane.showMessageDialog(null,  "Welcome!");
-      }
-      //If the username or password are incorrect then an error message will appear
-      else if(attempt != 3){
+        //TAKES USER TO NEXT GUI
+        TaskGui task = new TaskGui();
+        task.setVisible(true);
+        //closes login gui
+        dispose();
+      } else if (attempt >= 3) { //If the username or password are incorrect then an error message will appear
         JOptionPane.showMessageDialog(null,  "Sorry! Incorrect Username and/or Password. Attempt: " + attempt + " of 3.");
-      }
-
-      else {
+      } else {
         //Making the text fields unusable and the Login button invisible
         JOptionPane.showMessageDialog(null, "You have exceeded your allotted attempts");
         txtUser.setEditable(false);
         passPass.setEditable(false);
         btnLogin.setVisible(false);
       }
-
       attempt++;
     });
 
@@ -123,6 +120,7 @@ public class PantryGui extends JFrame {
     //Button to close the program
     JButton btnClose = new JButton("CLOSE");
     btnClose.setFont(new Font("Tahoma", Font.BOLD, 15));
+    btnClose.setForeground(Color.BLACK);
     btnClose.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent arg0) {
@@ -136,6 +134,7 @@ public class PantryGui extends JFrame {
     //Button to clear both Username and Password text fields
     JButton btnClear = new JButton("CLEAR");
     btnClear.setFont(new Font("Tahoma", Font.BOLD, 15));
+    btnClear.setForeground(Color.BLACK);
     btnClear.addActionListener(e -> {
       txtUser.setText("");
       passPass.setText("");
