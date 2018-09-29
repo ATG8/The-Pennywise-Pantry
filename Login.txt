@@ -1,0 +1,2 @@
+student|password|teststudent.cmscgroup5@gmail.com|1
+admin|yohohoandabottleofrum|noreply.cmscgroup5@gmail.com|0
