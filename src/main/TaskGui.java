@@ -19,22 +19,22 @@ import java.awt.event.ActionEvent;
 
 import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 
-public class TaskGui {
+class TaskGui {
 
   /**
    * Create the frame.
    */
-  public TaskGui() {
+  TaskGui() {
     PantryFrame taskGui = new PantryFrame("Pennywise Pantry", 100, 100, 475, 405);
 
     JPanel contentPane = new JPanel();
     contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
     contentPane.setLayout(null);
 
-    JLabel pennywiseLabel = new JLabel("The Pennywise Pantry!");
-    pennywiseLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-    pennywiseLabel.setBounds(93, 11, 234, 33);
-    contentPane.add(pennywiseLabel);
+    JLabel pantryLabel = new JLabel("The Pennywise Pantry!");
+    pantryLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+    pantryLabel.setBounds(93, 11, 234, 33);
+    contentPane.add(pantryLabel);
 
     JLabel instructionLabel = new JLabel("Please select your desired task below:");
     instructionLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -44,67 +44,61 @@ public class TaskGui {
     JButton viewInventoryButton = new JButton("View Inventory ");
     viewInventoryButton.setFont(new Font("Tahoma", Font.BOLD, 12));
     viewInventoryButton.setForeground(Color.BLACK);
-//    viewInventoryButton.addActionListener(ignored -> {
-//      ViewInventory inventory = new ViewInventory();
-//      inventory.setVisible(true);
-//      dispose();
-//    });
+    viewInventoryButton.addActionListener(ignored -> {
+      new ViewInventory();
+      taskGui.dispose();
+    });
     viewInventoryButton.setBounds(10, 123, 203, 39);
     contentPane.add(viewInventoryButton);
 
     JButton viewRecipesAndInventoryButton = new JButton("View Recipes and Inventory");
     viewRecipesAndInventoryButton.setForeground(Color.BLACK);
     viewRecipesAndInventoryButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-//	    viewRecipesAndInventoryButton.addMouseListener(new MouseAdapter() {
-//	      @Override
-//	      public void mouseClicked(MouseEvent arg0) {
-//	    	ViewRecipesInventory viewri = new ViewRecipesInventory();
-//	    	viewri.setVisible(true);;
-//	        dispose();
-//	      }
-//	    });
+    viewRecipesAndInventoryButton.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent ignored) {
+        new ViewRecipesInventory();
+        taskGui.dispose();
+      }
+    });
     viewRecipesAndInventoryButton.setBounds(10, 223, 203, 39);
     contentPane.add(viewRecipesAndInventoryButton);
 
     JButton viewRecipesButton = new JButton("View Recipes");
     viewRecipesButton.setForeground(Color.BLACK);
     viewRecipesButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-//	    viewRecipesButton.addActionListener(e -> {
-//	    	ViewRecipes recipes = new ViewRecipes();
-//	    	recipes.setVisible(true);
-//	        dispose();
-//	    });
+    viewRecipesButton.addActionListener(ignored -> {
+      new ViewRecipes();
+      taskGui.dispose();
+    });
     viewRecipesButton.setBounds(10, 173, 203, 39);
     contentPane.add(viewRecipesButton);
 
     JButton addInventoryButton = new JButton("Add Inventory Item");
-//    addInventoryButton.addActionListener(arg0 -> {
-//      AddInventory addInventory = new AddInventory();
-//      addInventory.setVisible(true);
-//      taskGui.dispose();
-//    });
+    addInventoryButton.addActionListener(ignored -> {
+      new AddInventory();
+      taskGui.dispose();
+    });
     addInventoryButton.setForeground(Color.BLACK);
     addInventoryButton.setFont(new Font("Tahoma", Font.BOLD, 12));
     addInventoryButton.setBounds(243, 123, 203, 39);
     contentPane.add(addInventoryButton);
 
     JButton addRecipesButton = new JButton("Add Recipes");
-//    addRecipesButton.addActionListener(arg0 -> {
-//      AddRecipes addRecipes = new AddRecipes();
-//      addRecipes.setVisible(true);
-//      taskGui.dispose();
-//    });
+    addRecipesButton.addActionListener(ignored -> {
+      new AddRecipes();
+      taskGui.dispose();
+    });
     addRecipesButton.setForeground(Color.BLACK);
     addRecipesButton.setFont(new Font("Tahoma", Font.BOLD, 12));
     addRecipesButton.setBounds(243, 173, 203, 39);
     contentPane.add(addRecipesButton);
 
     JButton listExpiringItemsButton = new JButton("List Expiring Items");
-//    listExpiringItemsButton.addActionListener(arg0 -> {
-//      ViewRecipesInventory viewri = new ViewRecipesInventory();
-//      viewri.setVisible(true);
-//      taskGui.dispose();
-//    });
+    listExpiringItemsButton.addActionListener(arg0 -> {
+      new ViewRecipesInventory();
+      taskGui.dispose();
+    });
     listExpiringItemsButton.setForeground(Color.BLACK);
     listExpiringItemsButton.setFont(new Font("Tahoma", Font.BOLD, 12));
     listExpiringItemsButton.setBounds(243, 223, 203, 39);
@@ -118,10 +112,10 @@ public class TaskGui {
     contentPane.add(closeButton);
 
     JButton backButton = new JButton("BACK");
-//    backButton.addActionListener(arg0 -> {
-//      PennywisePantryProgram pantry = new PennywisePantryProgram();
-//      taskGui.dispose();
-//    });
+    backButton.addActionListener(ignored -> {
+      new PennywisePantryProgram();
+      taskGui.dispose();
+    });
     backButton.setForeground(Color.BLACK);
     backButton.setFont(new Font("Tahoma", Font.BOLD, 12));
     backButton.setBounds(10, 273, 203, 39);

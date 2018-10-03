@@ -1,132 +1,99 @@
-//package main;
-//
-//import java.awt.Color;
-//import java.awt.EventQueue;
-//import java.awt.Font;
-//import java.awt.event.MouseAdapter;
-//import java.awt.event.MouseEvent;
-//
-//import javax.swing.JButton;
-//import javax.swing.JFrame;
-//import javax.swing.JLabel;
-//import javax.swing.JPanel;
-//import javax.swing.JTextField;
-//import javax.swing.WindowConstants;
-//import javax.swing.border.EmptyBorder;
-//
-//public class AddRecipes extends JFrame {
-//
-//	private JPanel contentPane;
-//	private JTextField textRecipesName;
-//	private JTextField txtQuantity;
-//
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					AddRecipes frame = new AddRecipes();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-//
-//	/**
-//	 * Create the frame.
-//	 */
-//	public AddRecipes() {
-//		setTitle("Pennywise Pantry");
-//	    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//	    setBounds(100, 100, 440, 367);
-//	    JPanel contentPane = new JPanel();
-//	    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-//	    setContentPane(contentPane);
-//	    contentPane.setLayout(null);
-//
-//	    //A welcome message
-//	    JLabel lblPennywisePantry = new JLabel("The Pennywise Pantry!");
-//	    lblPennywisePantry.setForeground(Color.BLACK);
-//	    lblPennywisePantry.setFont(new Font("Tahoma", Font.BOLD, 20));
-//	    lblPennywisePantry.setBounds(93, 11, 234, 33);
-//	    contentPane.add(lblPennywisePantry);
-//
-//	    //Informative label instructing what to do next
-//	    JLabel lblInstructions = new JLabel("Please add your new recipes below:");
-//	    lblInstructions.setForeground(Color.BLACK);
-//	    lblInstructions.setFont(new Font("Tahoma", Font.PLAIN, 14));
-//	    lblInstructions.setBounds(103, 48, 224, 20);
-//	    contentPane.add(lblInstructions);
-//
-//	    JLabel lblItemName = new JLabel("Recipes Name:");
-//	    lblItemName.setForeground(Color.BLACK);
-//	    lblItemName.setFont(new Font("Tahoma", Font.BOLD, 14));
-//	    lblItemName.setBounds(65, 116, 104, 20);
-//	    contentPane.add(lblItemName);
-//
-//	    textRecipesName = new JTextField();
-//	    textRecipesName.setFont(new Font("Tahoma", Font.BOLD, 14));
-//	    textRecipesName.setForeground(Color.BLACK);
-//	    textRecipesName.setText("Recipes Name...");
-//	    textRecipesName.setBounds(179, 116, 162, 20);
-//	    contentPane.add(textRecipesName);
-//	    textRecipesName.setColumns(10);
-//
-//	    JLabel lblIngredients = new JLabel("Ingredients:");
-//	    lblIngredients.setForeground(Color.BLACK);
-//	    lblIngredients.setFont(new Font("Tahoma", Font.BOLD, 14));
-//	    lblIngredients.setBounds(75, 147, 94, 20);
-//	    contentPane.add(lblIngredients);
-//
-//	    txtQuantity = new JTextField();
-//	    txtQuantity.setText("Ingredients...");
-//	    txtQuantity.setForeground(Color.BLACK);
-//	    txtQuantity.setFont(new Font("Tahoma", Font.BOLD, 14));
-//	    txtQuantity.setColumns(10);
-//	    txtQuantity.setBounds(179, 147, 162, 20);
-//	    contentPane.add(txtQuantity);
-//
-//	  //Search Button
-//	    JButton btnEnter = new JButton("ENTER");
-//	    btnEnter.setFont(new Font("Tahoma", Font.BOLD, 15));
-//	    btnEnter.setForeground(Color.BLACK);
-//	    btnEnter.addActionListener(ignored -> {
-//
-//	    });
-//
-//	    btnEnter.setBounds(30, 256, 104, 39);
-//	    contentPane.add(btnEnter);
-//
-//	    //Button to close the program
-//	    JButton btnClose = new JButton("CLOSE");
-//	    btnClose.setForeground(Color.BLACK);
-//	    btnClose.setFont(new Font("Tahoma", Font.BOLD, 15));
-//	    btnClose.addMouseListener(new MouseAdapter() {
-//	      @Override
-//	      public void mouseClicked(MouseEvent arg0) {
-//	        dispose();
-//	      }
-//	    });
-//
-//	    btnClose.setBounds(287, 256, 104, 39);
-//	    contentPane.add(btnClose);
-//
-//	    //Button that will log the user out (b/c the last screen was login) and take them to login screen
-//	    JButton btnBack = new JButton("BACK");
-//	    btnBack.setForeground(Color.BLACK);
-//	    btnBack.setFont(new Font("Tahoma", Font.BOLD, 15));
-//	    btnBack.addActionListener(e -> {
-//	    	TaskGui task = new TaskGui();
-//	    	task.setVisible(true);
-//	    	dispose();
-//
-//	    });
-//
-//	    btnBack.setBounds(160, 256, 104, 39);
-//	    contentPane.add(btnBack);
-//	}
-//}
+package main;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+class AddRecipes {
+
+
+  /**
+	 * Create the frame.
+	 */
+  AddRecipes() {
+    PantryFrame addRecipesGui = new PantryFrame("Pennywise Pantry", 100, 100, 440, 367);
+    JPanel contentPane = new JPanel();
+    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+    contentPane.setLayout(null);
+
+    //A welcome message
+    JLabel pantryLabel = new JLabel("The Pennywise Pantry!");
+    pantryLabel.setForeground(Color.BLACK);
+    pantryLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+    pantryLabel.setBounds(93, 11, 234, 33);
+    contentPane.add(pantryLabel);
+
+    //Informative label instructing what to do next
+    JLabel instructionLabel = new JLabel("Please add your new recipes below:");
+    instructionLabel.setForeground(Color.BLACK);
+    instructionLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+    instructionLabel.setBounds(103, 48, 224, 20);
+    contentPane.add(instructionLabel);
+
+    JLabel itemNameLabel = new JLabel("Recipes Name:");
+    itemNameLabel.setForeground(Color.BLACK);
+    itemNameLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+    itemNameLabel.setBounds(65, 116, 104, 20);
+    contentPane.add(itemNameLabel);
+
+    JTextField textRecipesName = new JTextField();
+    textRecipesName.setFont(new Font("Tahoma", Font.BOLD, 14));
+    textRecipesName.setForeground(Color.BLACK);
+    textRecipesName.setText("Recipes Name...");
+    textRecipesName.setBounds(179, 116, 162, 20);
+    textRecipesName.setColumns(10);
+    contentPane.add(textRecipesName);
+
+
+    JLabel ingredientsLabel = new JLabel("Ingredients:");
+    ingredientsLabel.setForeground(Color.BLACK);
+    ingredientsLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+    ingredientsLabel.setBounds(75, 147, 94, 20);
+    contentPane.add(ingredientsLabel);
+
+    JTextField txtQuantity = new JTextField();
+    txtQuantity.setText("Ingredients...");
+    txtQuantity.setForeground(Color.BLACK);
+    txtQuantity.setFont(new Font("Tahoma", Font.BOLD, 14));
+    txtQuantity.setColumns(10);
+    txtQuantity.setBounds(179, 147, 162, 20);
+    contentPane.add(txtQuantity);
+
+    //Search Button
+    JButton enterButton = new JButton("ENTER");
+    enterButton.setFont(new Font("Tahoma", Font.BOLD, 15));
+    enterButton.setForeground(Color.BLACK);
+    enterButton.addActionListener(ignored -> {});
+    enterButton.setBounds(30, 256, 104, 39);
+    contentPane.add(enterButton);
+
+    //Button to close the program
+    JButton closeButton = new JButton("CLOSE");
+    closeButton.setForeground(Color.BLACK);
+    closeButton.setFont(new Font("Tahoma", Font.BOLD, 15));
+    closeButton.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent ignored) {
+        addRecipesGui.dispose();
+      }
+    });
+    closeButton.setBounds(287, 256, 104, 39);
+    contentPane.add(closeButton);
+
+    //Button that will log the user out (b/c the last screen was login) and take them to login screen
+    JButton backButton = new JButton("BACK");
+    backButton.setForeground(Color.BLACK);
+    backButton.setFont(new Font("Tahoma", Font.BOLD, 15));
+    backButton.addActionListener(ignored -> {
+      new TaskGui();
+      addRecipesGui.dispose();
+    });
+    backButton.setBounds(160, 256, 104, 39);
+    contentPane.add(backButton);
+
+    addRecipesGui.setContentPane(contentPane);
+    addRecipesGui.display();
+	}
+}

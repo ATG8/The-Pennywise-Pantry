@@ -1,147 +1,117 @@
-//package main;
-//
-//import java.awt.Color;
-//import java.awt.EventQueue;
-//import java.awt.Font;
-//import java.awt.event.MouseAdapter;
-//import java.awt.event.MouseEvent;
-//
-//import javax.swing.JButton;
-//import javax.swing.JFrame;
-//import javax.swing.JLabel;
-//import javax.swing.JPanel;
-//import javax.swing.WindowConstants;
-//import javax.swing.border.EmptyBorder;
-//import javax.swing.JTextField;
-//
-//public class AddInventory extends JFrame {
-//
-//	private JPanel contentPane;
-//	private JTextField textItemName;
-//	private JTextField txtQuantity;
-//	private JTextField txtExpirationDate;
-//
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					AddInventory frame = new AddInventory();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-//
-//	/**
-//	 * Create the frame.
-//	 */
-//	public AddInventory() {
-//		setTitle("Pennywise Pantry");
-//	    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//	    setBounds(100, 100, 440, 367);
-//	    JPanel contentPane = new JPanel();
-//	    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-//	    setContentPane(contentPane);
-//	    contentPane.setLayout(null);
-//
-//	    //A welcome message
-//	    JLabel lblPennywisePantry = new JLabel("The Pennywise Pantry!");
-//	    lblPennywisePantry.setForeground(Color.BLACK);
-//	    lblPennywisePantry.setFont(new Font("Tahoma", Font.BOLD, 20));
-//	    lblPennywisePantry.setBounds(93, 11, 234, 33);
-//	    contentPane.add(lblPennywisePantry);
-//
-//	    //Informative label instructing what to do next
-//	    JLabel lblInstructions = new JLabel("Please add your new item below:");
-//	    lblInstructions.setForeground(Color.BLACK);
-//	    lblInstructions.setFont(new Font("Tahoma", Font.PLAIN, 14));
-//	    lblInstructions.setBounds(114, 48, 208, 20);
-//	    contentPane.add(lblInstructions);
-//
-//	    JLabel lblItemName = new JLabel("Item Name:");
-//	    lblItemName.setForeground(Color.BLACK);
-//	    lblItemName.setFont(new Font("Tahoma", Font.BOLD, 14));
-//	    lblItemName.setBounds(86, 116, 83, 20);
-//	    contentPane.add(lblItemName);
-//
-//	    textItemName = new JTextField();
-//	    textItemName.setFont(new Font("Tahoma", Font.BOLD, 14));
-//	    textItemName.setForeground(Color.BLACK);
-//	    textItemName.setText("Item Name...");
-//	    textItemName.setBounds(179, 116, 162, 20);
-//	    contentPane.add(textItemName);
-//	    textItemName.setColumns(10);
-//
-//	    JLabel lblItemQuantity = new JLabel("Quantity:");
-//	    lblItemQuantity.setForeground(Color.BLACK);
-//	    lblItemQuantity.setFont(new Font("Tahoma", Font.BOLD, 14));
-//	    lblItemQuantity.setBounds(104, 147, 65, 20);
-//	    contentPane.add(lblItemQuantity);
-//
-//	    txtQuantity = new JTextField();
-//	    txtQuantity.setText("Quantity...");
-//	    txtQuantity.setForeground(Color.BLACK);
-//	    txtQuantity.setFont(new Font("Tahoma", Font.BOLD, 14));
-//	    txtQuantity.setColumns(10);
-//	    txtQuantity.setBounds(179, 147, 162, 20);
-//	    contentPane.add(txtQuantity);
-//
-//	    JLabel lblExpirationDate = new JLabel("Expiration Date:");
-//	    lblExpirationDate.setForeground(Color.BLACK);
-//	    lblExpirationDate.setFont(new Font("Tahoma", Font.BOLD, 14));
-//	    lblExpirationDate.setBounds(58, 181, 111, 14);
-//	    contentPane.add(lblExpirationDate);
-//
-//	    txtExpirationDate = new JTextField();
-//	    txtExpirationDate.setText("Expiration Date...");
-//	    txtExpirationDate.setForeground(Color.BLACK);
-//	    txtExpirationDate.setFont(new Font("Tahoma", Font.BOLD, 14));
-//	    txtExpirationDate.setColumns(10);
-//	    txtExpirationDate.setBounds(179, 178, 162, 20);
-//	    contentPane.add(txtExpirationDate);
-//
-//	  //Search Button
-//	    JButton btnEnter = new JButton("ENTER");
-//	    btnEnter.setFont(new Font("Tahoma", Font.BOLD, 15));
-//	    btnEnter.setForeground(Color.BLACK);
-//	    btnEnter.addActionListener(ignored -> {
-//
-//	    });
-//
-//	    btnEnter.setBounds(30, 256, 104, 39);
-//	    contentPane.add(btnEnter);
-//
-//	    //Button to close the program
-//	    JButton btnClose = new JButton("CLOSE");
-//	    btnClose.setForeground(Color.BLACK);
-//	    btnClose.setFont(new Font("Tahoma", Font.BOLD, 15));
-//	    btnClose.addMouseListener(new MouseAdapter() {
-//	      @Override
-//	      public void mouseClicked(MouseEvent arg0) {
-//	        dispose();
-//	      }
-//	    });
-//
-//	    btnClose.setBounds(287, 256, 104, 39);
-//	    contentPane.add(btnClose);
-//
-//	    //Button that will log the user out (b/c the last screen was login) and take them to login screen
-//	    JButton btnBack = new JButton("BACK");
-//	    btnBack.setForeground(Color.BLACK);
-//	    btnBack.setFont(new Font("Tahoma", Font.BOLD, 15));
-//	    btnBack.addActionListener(e -> {
-//	    	TaskGui task = new TaskGui();
-//	    	task.setVisible(true);
-//	    	dispose();
-//
-//	    });
-//
-//	    btnBack.setBounds(160, 256, 104, 39);
-//	    contentPane.add(btnBack);
-//	}
-//}
+package main;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+class AddInventory {
+
+  /**
+	 * Create the frame.
+	 */
+  AddInventory() {
+    PantryFrame addInventoryGui = new PantryFrame("Pennywise Pantry", 100, 100, 440, 367);
+
+    JPanel contentPane = new JPanel();
+    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+    contentPane.setLayout(null);
+
+    //A welcome message
+    JLabel pantryLabel = new JLabel("The Pennywise Pantry!");
+    pantryLabel.setForeground(Color.BLACK);
+    pantryLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+    pantryLabel.setBounds(93, 11, 234, 33);
+    contentPane.add(pantryLabel);
+
+    //Informative label instructing what to do next
+    JLabel instructionLabel = new JLabel("Please add your new item below:");
+    instructionLabel.setForeground(Color.BLACK);
+    instructionLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+    instructionLabel.setBounds(114, 48, 208, 20);
+    contentPane.add(instructionLabel);
+
+    JLabel itemNameLabel = new JLabel("Item Name:");
+    itemNameLabel.setForeground(Color.BLACK);
+    itemNameLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+    itemNameLabel.setBounds(86, 116, 83, 20);
+    contentPane.add(itemNameLabel);
+
+    JTextField itemNameText = new JTextField();
+    itemNameText.setFont(new Font("Tahoma", Font.BOLD, 14));
+    itemNameText.setForeground(Color.BLACK);
+    itemNameText.setText("Item Name...");
+    itemNameText.setBounds(179, 116, 162, 20);
+    itemNameText.setColumns(10);
+    contentPane.add(itemNameText);
+
+
+    JLabel itemQuatityLabel = new JLabel("Quantity:");
+    itemQuatityLabel.setForeground(Color.BLACK);
+    itemQuatityLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+    itemQuatityLabel.setBounds(104, 147, 65, 20);
+    contentPane.add(itemQuatityLabel);
+
+    JTextField quantityText = new JTextField();
+    quantityText.setText("Quantity...");
+    quantityText.setForeground(Color.BLACK);
+    quantityText.setFont(new Font("Tahoma", Font.BOLD, 14));
+    quantityText.setColumns(10);
+    quantityText.setBounds(179, 147, 162, 20);
+    contentPane.add(quantityText);
+
+    JLabel expirationDateLabel = new JLabel("Expiration Date:");
+    expirationDateLabel.setForeground(Color.BLACK);
+    expirationDateLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+    expirationDateLabel.setBounds(58, 181, 111, 14);
+    contentPane.add(expirationDateLabel);
+
+    JTextField expirationDateText = new JTextField();
+    expirationDateText.setText("Expiration Date...");
+    expirationDateText.setForeground(Color.BLACK);
+    expirationDateText.setFont(new Font("Tahoma", Font.BOLD, 14));
+    expirationDateText.setColumns(10);
+    expirationDateText.setBounds(179, 178, 162, 20);
+    contentPane.add(expirationDateText);
+
+    //Search Button
+    JButton enterButton = new JButton("ENTER");
+    enterButton.setFont(new Font("Tahoma", Font.BOLD, 15));
+    enterButton.setForeground(Color.BLACK);
+    enterButton.addActionListener(ignored -> {
+      itemNameText.setText("");
+      quantityText.setText("");
+      expirationDateText.setText("");
+    });
+    enterButton.setBounds(30, 256, 104, 39);
+    contentPane.add(enterButton);
+
+    //Button to close the program
+    JButton closeButton = new JButton("CLOSE");
+    closeButton.setForeground(Color.BLACK);
+    closeButton.setFont(new Font("Tahoma", Font.BOLD, 15));
+    closeButton.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent ignored) {
+        addInventoryGui.dispose();
+      }
+    });
+    closeButton.setBounds(287, 256, 104, 39);
+    contentPane.add(closeButton);
+
+    //Button that will log the user out (b/c the last screen was login) and take them to login screen
+    JButton backButton = new JButton("BACK");
+    backButton.setForeground(Color.BLACK);
+    backButton.setFont(new Font("Tahoma", Font.BOLD, 15));
+    backButton.addActionListener(ignored -> {
+      new TaskGui();
+      addInventoryGui.dispose();
+    });
+    backButton.setBounds(160, 256, 104, 39);
+    contentPane.add(backButton);
+
+    addInventoryGui.setContentPane(contentPane);
+    addInventoryGui.display();
+	}
+}

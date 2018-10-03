@@ -157,7 +157,7 @@ public class PennywisePantryProgram {
     JButton clearButton = new JButton("CLEAR");
     clearButton.setFont(new Font("Tahoma", Font.BOLD, 15));
     clearButton.setForeground(Color.BLACK);
-    clearButton.addActionListener(e -> {
+    clearButton.addActionListener(ignored -> {
       userField.setText("");
       passwordField.setText("");
     });
