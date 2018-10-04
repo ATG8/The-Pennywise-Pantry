@@ -1,17 +1,53 @@
 package main;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 /**
  * @author ATG8
  */
 public final class SendEmail {
+    
+    private static List<List<String>> inventoryContents = new ArrayList<>();
+    private static List<List<String>> expiringList = new ArrayList<>();
+    
+    private static void getInventory() {
+        if (Files.exists(Paths.get("Inventory.txt"))) {
+          try {
+            List<String> contents = Files.readAllLines(Paths.get("Inventory.txt"));
+            contents.forEach(line -> inventoryContents.add(Arrays.stream(line.split("\\|")).collect(Collectors.toList())));
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        }
+    }
 
-  // constructor to get username from main
-  public SendEmail(String user, String email) {
+    private List<List<String>> getExpiring(){
+        for (List list : inventoryContents) {
+            if (Instant.now().plus(Duration.of(3, ChronoUnit.DAYS)).isAfter(Instant.parse(list.get(4).toString()).plus(Duration.of(Integer.parseInt(list.get(3).toString()), ChronoUnit.DAYS)))){
+                expiringList.add(list.subList(0, 2));
+            }         
+        }
+        return expiringList;
+    }
+
+    // constructor to get username from main
+    public SendEmail(String user, String email) {
+        
+    getInventory();
+        
     // set user and email address
     // declare variables
     String user1 = user;
@@ -39,9 +75,15 @@ public final class SendEmail {
       message.setFrom(new InternetAddress("noreply.cmscgroup5@gmail.com"));
       message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email1));
       message.setSubject("Pennywise Pantry - Soon to Expire");
-      message.setText("Hello " + user1 + ",\n\n" + "Please find your list of pantry items about to expire.");
-
-      //need to append list of items about to expire to setText
+      
+      StringBuilder sb = new StringBuilder();
+      for(List<String> s:getExpiring()){
+          sb.append(s);
+          sb.append("\n");
+      }
+      
+      message.setText("Hello " + user1 + ",\n\n" + "Please find your list of pantry items about to expire." +
+              "\n\n" + "[Item Number, Description]\n" + sb.toString());
 
       Transport.send(message);
 

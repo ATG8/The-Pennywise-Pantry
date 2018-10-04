@@ -24,7 +24,7 @@ public class PennywisePantryProgram {
 
   private int attempt = 1;
   private static String email;
-  private static List<List<String>> arrayedContents = new ArrayList<>();
+  private static List<List<String>> credentialContents = new ArrayList<>();
 
 
   /**
@@ -41,7 +41,7 @@ public class PennywisePantryProgram {
     if (Files.exists(Paths.get("Login.txt"))) {
       try {
         List<String> contents = Files.readAllLines(Paths.get("Login.txt"));
-        contents.forEach(line -> arrayedContents.add(Arrays.stream(line.split("\\|")).collect(Collectors.toList())));
+        contents.forEach(line -> credentialContents.add(Arrays.stream(line.split("\\|")).collect(Collectors.toList())));
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -50,8 +50,8 @@ public class PennywisePantryProgram {
 
   private boolean validCreds(String username, String password) {
     boolean isValid = false;
-
-    for (List list : arrayedContents) {
+    
+    for (List list : credentialContents) {
       if (list.get(0).toString().equalsIgnoreCase(username) && list.get(1).equals(password)) {
         isValid = true;
       }
@@ -60,14 +60,14 @@ public class PennywisePantryProgram {
   }
 
   private String getEmail(String username) {
-    for (List list : arrayedContents) {
+    for (List list : credentialContents) {
       if (list.get(0).toString().equalsIgnoreCase(username)) {
         email = list.get(2).toString();
       }
     }
     return email;
   }
-
+  
   private void startGui() {
     PantryFrame loginGui = new PantryFrame("Pennywise Pantry", 100, 100, 431, 367);
     JPanel contentPane = new JPanel();
@@ -117,7 +117,7 @@ public class PennywisePantryProgram {
         email = getEmail(username);
 
         //pass username and email to SendEmail Class
-//        SendEmail expired = new SendEmail(username, email);
+        SendEmail expired = new SendEmail(username, email);
 
         //if username and password are correct then a welcome message appears
         //TAKES USER TO NEXT GUI
