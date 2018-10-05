@@ -112,4 +112,3 @@ class TaskGui {
     taskGui.display();
   }
 }
-
