@@ -81,9 +81,13 @@ public final class SendEmail {
           sb.append(s);
           sb.append("\n");
       }
-      
-      message.setText("Hello " + user1 + ",\n\n" + "Please find your list of pantry items about to expire." +
+      // decide message body in case no items are about to expire
+      if(getExpiring().isEmpty()){
+          message.setText("Hello " + user1 + ",\n\n" + "You have no items expiring in the next 3 days.");
+      }else{
+          message.setText("Hello " + user1 + ",\n\n" + "Please find your list of pantry items about to expire." +
               "\n\n" + "[Item Number, Description]\n" + sb.toString());
+      }
 
       Transport.send(message);
 

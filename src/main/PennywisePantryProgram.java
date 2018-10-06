@@ -117,7 +117,7 @@ public class PennywisePantryProgram {
         email = getEmail(username);
 
         //pass username and email to SendEmail Class
-        SendEmail expired = new SendEmail(username, email);
+//        SendEmail expired = new SendEmail(username, email);
 
         //if username and password are correct then a welcome message appears
         //TAKES USER TO NEXT GUI
