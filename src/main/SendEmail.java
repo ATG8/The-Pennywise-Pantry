@@ -1,3 +1,9 @@
+/**
+ * File: SendEmail
+ * Group 5: JayElElEm
+ * Date: 12 Oct 2018
+ * Purpose: CMSC 495 Group Project
+ */
 package main;
 
 import java.io.IOException;
@@ -15,43 +21,18 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-/**
- * @author ATG8
- */
-public final class SendEmail {
-    
-    private static List<List<String>> inventoryContents = new ArrayList<>();
-    private static List<List<String>> expiringList = new ArrayList<>();
-    
-    private static void getInventory() {
-        if (Files.exists(Paths.get("Inventory.txt"))) {
-          try {
-            List<String> contents = Files.readAllLines(Paths.get("Inventory.txt"));
-            contents.forEach(line -> inventoryContents.add(Arrays.stream(line.split("\\|")).collect(Collectors.toList())));
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        }
-    }
+final class SendEmail {
 
-    private List<List<String>> getExpiring(){
-        for (List list : inventoryContents) {
-            if (Instant.now().plus(Duration.of(3, ChronoUnit.DAYS)).isAfter(Instant.parse(list.get(4).toString()).plus(Duration.of(Integer.parseInt(list.get(3).toString()), ChronoUnit.DAYS)))){
-                expiringList.add(list.subList(0, 2));
-            }         
-        }
-        return expiringList;
-    }
+  private static List<List<String>> inventoryContents = new ArrayList<>();
+  private static List<List<String>> expiringList = new ArrayList<>();
 
-    // constructor to get username from main
-    public SendEmail(String user, String email) {
-        
+  // constructor to get username from main
+  SendEmail(String user, String email) {
+
     getInventory();
-        
+
     // set user and email address
     // declare variables
-    String user1 = user;
-    String email1 = email;
 
     // send email to user with list of expired goods
     Properties props = new Properties();
@@ -70,25 +51,48 @@ public final class SendEmail {
         });
 
     try {
-
       Message message = new MimeMessage(session);
       message.setFrom(new InternetAddress("noreply.cmscgroup5@gmail.com"));
-      message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email1));
+      message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
       message.setSubject("Pennywise Pantry - Soon to Expire");
-      
-      StringBuilder sb = new StringBuilder();
-      for(List<String> s:getExpiring()){
-          sb.append(s);
-          sb.append("\n");
+
+      StringBuilder expiringItems = new StringBuilder();
+      for (List<String> item : getExpiring()) {
+        expiringItems.append(item);
+        expiringItems.append("\n");
       }
-      
-      message.setText("Hello " + user1 + ",\n\n" + "Please find your list of pantry items about to expire." +
-              "\n\n" + "[Item Number, Description]\n" + sb.toString());
+
+      message.setText("Hello " + user + ",\n\n" + "Please find your list of pantry items about to expire."
+          + "\n\n" + "[Item Number, Description]\n" + expiringItems.toString());
 
       Transport.send(message);
 
     } catch (MessagingException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  private static void getInventory() {
+    if (Files.exists(Paths.get("Inventory.txt"))) {
+      try {
+        List<String> contents = Files.readAllLines(Paths.get("Inventory.txt"));
+        contents.forEach(line -> inventoryContents.add(Arrays.stream(line.split("\\|")).collect(Collectors.toList())));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  private List<List<String>> getExpiring() {
+    for (List list : inventoryContents) {
+      if (Instant.now()
+          .plus(Duration.of(3, ChronoUnit.DAYS))
+          .isAfter(Instant.parse(list.get(4)
+              .toString())
+              .plus(Duration.of(Integer.parseInt(list.get(3).toString()), ChronoUnit.DAYS)))) {
+        expiringList.add(list.subList(0, 2));
+      }
+    }
+    return expiringList;
   }
 }

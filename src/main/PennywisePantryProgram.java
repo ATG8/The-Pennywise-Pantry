@@ -1,7 +1,18 @@
+/**
+ * File: PennywisePantryProgram
+ * Group 5: JayElElEm
+ * Date: 12 Oct 2018
+ * Purpose: CMSC 495 Group Project
+ */
 package main;
 
+import main.gui_elements.PantryButton;
+import main.gui_elements.PantryFrame;
+import main.gui_elements.PantryLabel;
+import main.gui_elements.PantryPanel;
+import main.guis.TaskGui;
+
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,13 +24,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/*
- * Author: Thomas Lloyd
- * Purpose:To create a login GUI for the Pennywise Pantry.
- * 			The GUI will only allow the user 3 attempts before
- * 			locking them out.
- * Date:	9/25/2018
- */
 public class PennywisePantryProgram {
 
   private int attempt = 1;
@@ -70,29 +74,12 @@ public class PennywisePantryProgram {
   
   private void startGui() {
     PantryFrame loginGui = new PantryFrame("Pennywise Pantry", 100, 100, 431, 367);
-    JPanel contentPane = new JPanel();
-    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-    contentPane.setLayout(null);
-
-    JLabel pantryLabel = new JLabel("Welcome to the Pennywise Pantry!");
-    pantryLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-    pantryLabel.setBounds(29, 11, 361, 33);
-    contentPane.add(pantryLabel);
-
-    JLabel userNameLabel = new JLabel("USERNAME:");
-    userNameLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-    userNameLabel.setBounds(75, 119, 93, 14);
-    contentPane.add(userNameLabel);
-
-    JLabel passwordLabel = new JLabel("PASSWORD:");
-    passwordLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-    passwordLabel.setBounds(75, 161, 92, 14);
-    contentPane.add(passwordLabel);
-
-    JLabel instructionLabel = new JLabel("Please login below with your username and password");
-    instructionLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-    instructionLabel.setBounds(39, 50, 330, 20);
-    contentPane.add(instructionLabel);
+    PantryPanel contentPane = new PantryPanel();
+    contentPane.add(new PantryLabel("Welcome to the Pennywise Pantry!", Font.BOLD, 20, 29, 11, 361, 33));
+    contentPane.add(new PantryLabel("USERNAME:", Font.BOLD, 14, 75, 119, 93, 14));
+    contentPane.add(new PantryLabel("PASSWORD:", Font.BOLD, 14, 75, 161, 92, 14));
+    contentPane.add(new PantryLabel("Please login below with your username and password",
+        Font.PLAIN, 14, 39, 50, 330, 20));
 
     JPasswordField passwordField = new JPasswordField();
     passwordField.setBounds(175, 160, 152, 20);
@@ -103,9 +90,7 @@ public class PennywisePantryProgram {
     userField.setColumns(10);
     contentPane.add(userField);
 
-    JButton loginButton = new JButton("LOGIN");
-    loginButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-    loginButton.setForeground(Color.BLACK);
+    PantryButton loginButton = new PantryButton("LOGIN", 15, 29, 239, 104, 39);
     loginButton.addActionListener(ignored -> {
       String username = userField.getText();
       String password = String.valueOf(passwordField.getPassword());
@@ -117,11 +102,12 @@ public class PennywisePantryProgram {
         email = getEmail(username);
 
         //pass username and email to SendEmail Class
-        SendEmail expired = new SendEmail(username, email);
+//        SendEmail expired = new SendEmail(username, email);
 
         //if username and password are correct then a welcome message appears
         //TAKES USER TO NEXT GUI
         new TaskGui();
+
         //closes login gui
         loginGui.dispose();
       } else if (attempt < 3) { //If the username or password are incorrect then an error message will appear
@@ -137,31 +123,24 @@ public class PennywisePantryProgram {
       }
       attempt++;
     });
-    loginButton.setBounds(29, 239, 104, 39);
     contentPane.add(loginButton);
 
     //    Button to close the program
-    JButton closeButton = new JButton("CLOSE");
-    closeButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-    closeButton.setForeground(Color.BLACK);
+    PantryButton closeButton = new PantryButton("CLOSE", 15, 286, 239, 104, 39);
     closeButton.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent arg0) {
         loginGui.dispose();
       }
     });
-    closeButton.setBounds(286, 239, 104, 39);
     contentPane.add(closeButton);
 
         //Button to clear both Username and Password text fields
-    JButton clearButton = new JButton("CLEAR");
-    clearButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-    clearButton.setForeground(Color.BLACK);
+    PantryButton clearButton = new PantryButton("CLEAR", 15, 159, 239, 104, 39);
     clearButton.addActionListener(ignored -> {
       userField.setText("");
       passwordField.setText("");
     });
-    clearButton.setBounds(159, 239, 104, 39);
     contentPane.add(clearButton);
 
     loginGui.setContentPane(contentPane);

@@ -1,4 +1,10 @@
-package main;
+/**
+ * File: Recipe
+ * Group 5: JayElElEm
+ * Date: 12 Oct 2018
+ * Purpose: CMSC 495 Group Project
+ */
+package main.domain_objects;
 
 import java.util.List;
 /**
@@ -20,31 +26,31 @@ public class Recipe {
       this.instructions = instructions;
    }  
    
-   protected void setRecipeNumber(long recipeNumber) {
+   public void setRecipeNumber(long recipeNumber) {
       this.recipeNumber = recipeNumber;
    }
    
    public long getRecipeNumber() {
       return recipeNumber;
    }
-   
-   protected void setRecipeName(String recipeName) {
+
+   public void setRecipeName(String recipeName) {
       this.recipeName = recipeName;
    }
    
    public String getRecipeName() {
       return recipeName;
    }
-   
-   protected void setIngredients(List<String> ingredients) {
+
+   public void setIngredients(List<String> ingredients) {
       this.ingredients = ingredients;
    }
    
    public List<String> getIngredients() {
       return ingredients;
    }
-   
-   protected void setInstructions(String instructions) {
+
+   public void setInstructions(String instructions) {
       this.instructions = instructions;
    }
    
