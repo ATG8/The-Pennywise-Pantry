@@ -6,95 +6,101 @@
  */
 package main.domain_objects;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.util.Arrays.stream;
 
 /**
- *
+ * Class to hold a Recipe item.
  */
-
 public class Recipe {
   private String recipeName;
   private List<IngredientAndQuantity> ingredients;
   private String instructions;
 
-  public Recipe() {}
-
+  /**
+   * Constructor.
+   *
+   * @param recipeName the name of the recipe
+   * @param ingredients the ingredients
+   * @param instructions the recipe instructions
+   */
   public Recipe(String recipeName, List<IngredientAndQuantity> ingredients, String instructions) {
     this.recipeName = recipeName;
     this.ingredients = ingredients;
     this.instructions = instructions;
   }
 
+  /**
+   * @param recipeName the name of the recipe
+   */
   public void setRecipeName(String recipeName) {
     this.recipeName = recipeName;
   }
 
+  /**
+   * @return the name of the recipe
+   */
   public String getRecipeName() {
     return recipeName;
   }
 
+  /**
+   * @param ingredients the {@link List} of {@link IngredientAndQuantity}
+   */
   public void setIngredients(List<IngredientAndQuantity> ingredients) {
     this.ingredients = ingredients;
   }
 
+  /**
+   * @return the {@link List} of {@link IngredientAndQuantity}
+   */
   public List<IngredientAndQuantity> getIngredients() {
     return ingredients;
   }
 
+  /**
+   * @param instructions the recipe instructions
+   */
   public void setInstructions(String instructions) {
     this.instructions = instructions;
   }
 
+  /**
+   * @return the recipe instructions
+   */
   public String getInstructions() {
     return instructions;
   }
 
-  public List<Recipe> getRecipesFromFile() {
-    List<Recipe> recipeList = new ArrayList<>();
-    if (Files.exists(Paths.get("Recipes.txt"))) {
-      try {
-        List<String> contents = Files.readAllLines(Paths.get("Recipes.txt"));
-        contents.forEach(line -> {
-          List<String> lineContents = stream(line.split("\\|")).collect(Collectors.toList());
-          List<IngredientAndQuantity> ingredients = new ArrayList<>();
-          for (int i = 1; i < lineContents.size(); i++) {
-            String ingredient = lineContents.get(i);
-            ingredients.add(
-                new IngredientAndQuantity(ingredient.substring(0, ingredient.indexOf(",")),
-                    Integer.parseInt(ingredient.substring(ingredient.indexOf(",") + 1))));
-          }
-          String name = lineContents.get(0);
-          recipeList.add(new Recipe(name, ingredients, null));
-        });
 
-      } catch (IOException ex) {
-        ex.printStackTrace();
-      }
-    }
-    return recipeList;
-  }
-
-  private class IngredientAndQuantity {
+  /**
+   * Private class to hold a list of ingredients and the quantity needed
+   */
+  public static class IngredientAndQuantity {
     private String ingredient;
     private int quantity;
 
-    IngredientAndQuantity(String ingredient, int quantity) {
+    /**
+     * Constructor.
+     *
+     * @param ingredient the ingredient
+     * @param quantity the quantity of the ingredient
+     */
+    public IngredientAndQuantity(String ingredient, int quantity) {
       this.ingredient = ingredient;
       this.quantity = quantity;
     }
 
-    public String getIngredient() {
+    /**
+     * @return the ingredient
+     */
+    String getIngredient() {
       return ingredient;
     }
 
-    public int getQuantity() {
+    /**
+     * @return the quantity
+     */
+    int getQuantity() {
       return quantity;
     }
   }
@@ -109,9 +115,9 @@ public class Recipe {
         .append("\nQuantity: ")
         .append(ingredient.getQuantity()));
     sb.append("\nInstructions: ")
-        .append(instructions);
+        .append(instructions)
+        .append("\n");
 
     return sb.toString();
   }
-
 }

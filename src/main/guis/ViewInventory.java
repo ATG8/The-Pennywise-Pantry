@@ -6,12 +6,15 @@
  */
 package main.guis;
 
+import main.domain_objects.Inventory;
 import main.gui_elements.*;
+import main.utils.PantryFileUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 class ViewInventory {
 
@@ -42,6 +45,10 @@ class ViewInventory {
     //Search Button
     PantryButton searchButton = new PantryButton("SEARCH", 15, 29, 239, 104, 39);
     searchButton.addActionListener(ignored -> {
+      if (viewAllRadio.isSelected()) {
+        List<Inventory> inventoryList = PantryFileUtils.getInventoryFromFile();
+        inventoryList.forEach(System.out::println);
+      }
     });
     contentPane.add(searchButton);
 
