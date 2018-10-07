@@ -42,7 +42,9 @@ class ViewRecipes{
     PantryRadioButton searchRadio = new PantryRadioButton("Search:", false, 93, 157, 77, 23);
     buttonGroup.add(searchRadio);
     contentPane.add(searchRadio);
-    contentPane.add(new PantryTextField("", 173, 160, 154, 20));
+    PantryComboLists pcl = new PantryComboLists();
+    List<List<String>> myList = pcl.getComboLists("Recipes");
+    contentPane.add(new PantryComboBox(myList, 173, 160, 154, 20));
 
 	  //Submit Button
     PantryButton submitButton = new PantryButton("SUBMIT", 15, 29, 239, 104, 39);

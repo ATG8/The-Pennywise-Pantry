@@ -40,7 +40,9 @@ class ViewInventory {
     PantryRadioButton searchRadio = new PantryRadioButton("Search:", false, 93, 156, 77, 23);
     buttonGroup.add(searchRadio);
     contentPane.add(searchRadio);
-    contentPane.add(new PantryTextField("", 173, 159, 154, 20));
+    PantryComboLists pcl = new PantryComboLists();
+    List<List<String>> myList = pcl.getComboLists("Inventory");
+    contentPane.add(new PantryComboBox(myList, 173, 159, 154, 20));
 
     //Search Button
     PantryButton searchButton = new PantryButton("SEARCH", 15, 29, 239, 104, 39);
