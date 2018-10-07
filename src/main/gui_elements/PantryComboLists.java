@@ -33,6 +33,7 @@ public class PantryComboLists{
   private static void getInventory() {
     if (Files.exists(Paths.get("Inventory.txt"))) {
       try {
+        fileContents.clear();
         List<String> contents = Files.readAllLines(Paths.get("Inventory.txt"));
         contents.forEach(line -> fileContents.add(Arrays.stream(line.split("\\|")).collect(Collectors.toList())));
       } catch (IOException e) {
@@ -44,6 +45,7 @@ public class PantryComboLists{
   private static void getRecipes() {
     if (Files.exists(Paths.get("Recipes.txt"))) {
       try {
+        fileContents.clear();
         List<String> contents = Files.readAllLines(Paths.get("Recipes.txt"));
         contents.forEach(line -> fileContents.add(Arrays.stream(line.split("\\|")).collect(Collectors.toList())));
       } catch (IOException e) {
@@ -54,6 +56,8 @@ public class PantryComboLists{
   
   private List<List<String>> getRefined(String listType) {
     if(listType.equals("Inventory")){
+        uniqueList.clear();
+        temp.clear();
         for(List list : fileContents){
             temp.add(list.subList(1, 2));
         }
@@ -63,8 +67,10 @@ public class PantryComboLists{
             }
         }
     }else{
+        uniqueList.clear();
+        temp.clear();
         for(List list : fileContents){
-            temp.add(list.subList(1, 2));
+            temp.add(list.subList(0, 1));
         }
         for(List list : temp){
             if(!uniqueList.contains(list)){
