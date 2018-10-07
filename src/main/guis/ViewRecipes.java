@@ -6,12 +6,15 @@
  */
 package main.guis;
 
+import main.domain_objects.Recipe;
 import main.gui_elements.*;
+import main.utils.PantryFileUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 class ViewRecipes{
 
@@ -43,7 +46,12 @@ class ViewRecipes{
 
 	  //Submit Button
     PantryButton submitButton = new PantryButton("SUBMIT", 15, 29, 239, 104, 39);
-    submitButton.addActionListener(ignored -> {});
+    submitButton.addActionListener(ignored -> {
+      if (viewAllRadio.isSelected()) {
+        List<Recipe> recipeList = PantryFileUtils.getRecipesFromFile();
+        recipeList.forEach(System.out::println);
+      }
+    });
     contentPane.add(submitButton);
 
     //Button to close the program

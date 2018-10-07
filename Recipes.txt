@@ -1,16 +1,5 @@
-Bacon, Eggs, and OJ|Eggs|2
-Bacon, Eggs, and OJ|Bacon|3
-Bacon, Eggs, and OJ|OJ|1
-Bacon, Eggs, and Milk|Eggs|2
-Bacon, Eggs, and Milk|Bacon|3
-Bacon, Eggs, and Milk|Milk|1
-Turkey Sandwich|Bread|2
-Turkey Sandwich|Turkey|4
-Turkey Sandwich|Cheese|1
-Ham Sandwich|Bread|2
-Ham Sandwich|Ham|4
-Ham Sandwich|Cheese|1
-Ham and Turkey Sandwich|Bread|2
-Ham and Turkey Sandwich|Ham|2
-Ham and Turkey Sandwich|Turkey|2
-Ham and Turkey Sandwich|Cheese|1
+Bacon Eggs OJ|Eggs,2|Bacon,3|OJ,1
+Bacon Eggs and Milk|Eggs,2|Bacon,3|Milk,1
+Turkey Sandwich|Bread,2|Turkey,4|Cheese,1
+Ham Sandwich|Bread,2|Ham,4|Cheese,1
+Ham and Turkey Sandwich|Bread,2|Ham,2|Turkey,2|Cheese,1

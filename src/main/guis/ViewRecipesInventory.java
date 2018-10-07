@@ -17,7 +17,7 @@ import java.awt.event.MouseEvent;
 class ViewRecipesInventory {
 
 	/**
-	 * Create the frame.
+	 * Create the ViewRecipesInventory frame.
 	 */
   ViewRecipesInventory() {
     PantryFrame viewRecipesInventoryGui = new PantryFrame("Pennywise Pantry", 100, 100, 440, 367);
