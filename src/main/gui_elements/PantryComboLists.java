@@ -1,5 +1,5 @@
 /**
- * File: PantryTextField
+ * File: PantryComboLists
  * Group 5: JayElElEm
  * Date: 12 Oct 2018
  * Purpose: CMSC 495 Group Project
