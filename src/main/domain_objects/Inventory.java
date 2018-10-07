@@ -1,4 +1,10 @@
-package main;
+/**
+ * File: Inventory
+ * Group 5: JayElElEm
+ * Date: 12 Oct 2018
+ * Purpose: CMSC 495 Group Project
+ */
+package main.domain_objects;
 
 import java.time.Instant;
 /**
@@ -18,38 +24,37 @@ public class Inventory {
       this.itemName = itemName;
       this.dateEntered = dateEntered;
       this.expireDate = expireDate;
-   }  
-   
-   protected void setInventoryNumber(long inventoryNumber) {
+   }
+
+   public void setInventoryNumber(long inventoryNumber) {
       this.inventoryNumber = inventoryNumber;
    }
    
    public long getInventoryNumber() {
       return inventoryNumber;
    }
-   
-   protected void setItemName(String itemName) {
+
+   public void setItemName(String itemName) {
       this.itemName = itemName;
    }
    
    public String getItemName() {
       return itemName;
    }
-   
-   protected void setDateEntered(Instant dateEntered) {
+
+   public void setDateEntered(Instant dateEntered) {
       this.dateEntered = dateEntered;
    }
    
    public Instant getDateEntered() {
       return dateEntered;
    }
-   
-   protected void setExpireDate(Instant expireDate) {
+
+   public void setExpireDate(Instant expireDate) {
       this.expireDate = expireDate;
    }
    
    public Instant getExpireDate() {
       return expireDate;
    }
-   
 }
