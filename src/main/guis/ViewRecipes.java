@@ -16,10 +16,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import static main.utils.PantryFileUtils.getComboLists;
+
 class ViewRecipes{
 
   /**
-	 * Create the frame.
+	 * Create the ViewRecipes frame.
 	 */
   ViewRecipes() {
     PantryFrame viewRecipesGui = new PantryFrame("Pennywise Pantry", 100, 100, 440, 367);
@@ -42,7 +44,8 @@ class ViewRecipes{
     PantryRadioButton searchRadio = new PantryRadioButton("Search:", false, 93, 157, 77, 23);
     buttonGroup.add(searchRadio);
     contentPane.add(searchRadio);
-    contentPane.add(new PantryTextField("", 173, 160, 154, 20));
+    List<String> myList = getComboLists("Recipes");
+    contentPane.add(new PantryComboBox(myList, 173, 160, 154, 20));
 
 	  //Submit Button
     PantryButton submitButton = new PantryButton("SUBMIT", 15, 29, 239, 104, 39);

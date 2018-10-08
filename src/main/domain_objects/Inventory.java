@@ -6,16 +6,7 @@
  */
 package main.domain_objects;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.util.Arrays.stream;
 
 /**
  * Class to hold an Inventory item.
@@ -108,6 +99,5 @@ public class Inventory {
         + "\nDate of expiration: "
         + expireDate
         + "\n";
-
   }
 }
