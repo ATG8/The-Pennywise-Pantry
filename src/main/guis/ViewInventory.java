@@ -16,6 +16,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import static main.utils.PantryFileUtils.getComboLists;
+
 class ViewInventory {
 
   /**
@@ -40,8 +42,7 @@ class ViewInventory {
     PantryRadioButton searchRadio = new PantryRadioButton("Search:", false, 93, 156, 77, 23);
     buttonGroup.add(searchRadio);
     contentPane.add(searchRadio);
-    PantryComboLists pcl = new PantryComboLists();
-    List<List<String>> myList = pcl.getComboLists("Inventory");
+    List<String> myList = getComboLists("Inventory");
     contentPane.add(new PantryComboBox(myList, 173, 159, 154, 20));
 
     //Search Button
