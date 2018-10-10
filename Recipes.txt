@@ -3,3 +3,5 @@ Bacon Eggs and Milk|Eggs,2|Bacon,3|Milk,1
 Turkey Sandwich|Bread,2|Turkey,4|Cheese,1
 Ham Sandwich|Bread,2|Ham,4|Cheese,1
 Ham and Turkey Sandwich|Bread,2|Ham,2|Turkey,2|Cheese,1
+PeanutButter Jelly|Bread,2|PeanutButter,1|Jelly,1
+Cereal|Milk,1|Cereal,1

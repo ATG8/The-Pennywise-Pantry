@@ -6,11 +6,19 @@
  */
 package main.guis;
 
+import main.domain_objects.Inventory;
 import main.gui_elements.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+
+import static main.utils.PantryFileUtils.saveInventoryToFile;
 
 class AddInventory {
 
@@ -35,17 +43,31 @@ class AddInventory {
     PantryTextField quantityText = new PantryTextField("Quantity...", 179, 147, 162, 20);
     contentPane.add(quantityText);
 
-    contentPane.add(new PantryLabel("Expiration Date:", Font.BOLD, 14, 58, 181, 111, 14));
+    contentPane.add(new PantryLabel("Days:", Font.BOLD, 14, 58, 181, 111, 14));
 
-    PantryTextField expirationDateText = new PantryTextField("Expiration Date...", 179, 178, 162, 20);
-    contentPane.add(expirationDateText);
+    PantryTextField expirationDayText = new PantryTextField("Days to Expire...", 179, 178, 162, 20);
+    contentPane.add(expirationDayText);
 
     //Search Button
+    List<Inventory> inventoryList = new ArrayList<>();
     PantryButton enterButton = new PantryButton("ENTER", 15, 30, 256, 104, 39);
     enterButton.addActionListener(ignored -> {
+      String itemName = itemNameText.getText();
+      String quantity = quantityText.getText();
+      String expirationDays = expirationDayText.getText();
+      if (itemName.trim().isEmpty() || itemName == null
+          || quantity.trim().isEmpty() || quantity == null
+          || expirationDays.trim().isEmpty() || expirationDays == null) {
+        JOptionPane.showMessageDialog(null, "All fields are required.");
+      }
+      Instant now = Instant.now();
+      int expire = Integer.parseInt(expirationDays);
+      for (int i = 0; i < Integer.parseInt(quantity); i++ ) {
+        inventoryList.add(new Inventory(itemName, now, now.plus(expire, ChronoUnit.DAYS)));
+      }
       itemNameText.setText("");
       quantityText.setText("");
-      expirationDateText.setText("");
+      expirationDayText.setText("");
     });
     contentPane.add(enterButton);
 
@@ -54,6 +76,7 @@ class AddInventory {
     closeButton.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent ignored) {
+        saveInventoryToFile(inventoryList);
         addInventoryGui.dispose();
       }
     });
@@ -62,6 +85,7 @@ class AddInventory {
     //Button that will log the user out (b/c the last screen was login) and take them to login screen
     PantryButton backButton = new PantryButton("BACK", 15, 160, 256, 104, 39);
     backButton.addActionListener(ignored -> {
+      saveInventoryToFile(inventoryList);
       new TaskGui();
       addInventoryGui.dispose();
     });

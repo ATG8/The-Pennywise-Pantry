@@ -33,6 +33,20 @@ public class Inventory {
   }
 
   /**
+   * Constructor.
+   *
+   * @param itemName        the name of the inventory item
+   * @param dateEntered     the date the item was entered into the file
+   * @param expireDate      the date the item expires
+   */
+  public Inventory(String itemName, Instant dateEntered, Instant expireDate) {
+    this.itemName = itemName;
+    this.dateEntered = dateEntered;
+    this.expireDate = expireDate;
+  }
+
+
+  /**
    * @param inventoryNumber the primary key
    */
   public void setInventoryNumber(long inventoryNumber) {

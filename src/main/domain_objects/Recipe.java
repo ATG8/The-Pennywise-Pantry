@@ -93,14 +93,14 @@ public class Recipe {
     /**
      * @return the ingredient
      */
-    String getIngredient() {
+    public String getIngredient() {
       return ingredient;
     }
 
     /**
      * @return the quantity
      */
-    int getQuantity() {
+    public int getQuantity() {
       return quantity;
     }
   }
