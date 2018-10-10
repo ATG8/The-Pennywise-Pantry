@@ -4,6 +4,7 @@ import main.domain_objects.Inventory;
 import main.domain_objects.Recipe;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
@@ -29,8 +30,8 @@ public class PantryFileUtils {
         contents.forEach(line -> {
           List<String> lineContents = stream(line.split("\\|")).collect(Collectors.toList());
           long itemNumber = Long.parseLong(lineContents.get(0));
-          long expiryDays = Long.parseLong(lineContents.get(3));
-          Instant dateEntered = Instant.parse(lineContents.get(4));
+          long expiryDays = Long.parseLong(lineContents.get(2));
+          Instant dateEntered = Instant.parse(lineContents.get(3));
           Instant expiryDate = dateEntered.plus(expiryDays, ChronoUnit.DAYS);
           inventoryList.add(new Inventory(itemNumber, lineContents.get(1), dateEntered, expiryDate));
         });
@@ -87,5 +88,61 @@ public class PantryFileUtils {
       comboList = recipeList.stream().map(Recipe::getRecipeName).distinct().collect(Collectors.toList());
     }
     return comboList;
+  }
+
+  /**
+   * Method to save the {@link List} of {@link Inventory} to file.
+   *
+   * @param inventoryList the {@link List} of {@link Inventory} to save
+   */
+  public static void saveInventoryToFile(List<Inventory> inventoryList) {
+    List<Inventory> currentList = getInventoryFromFile();
+    currentList.addAll(inventoryList);
+    for (int i = 1; i <= currentList.size(); i++) {
+      currentList.get(i - 1).setInventoryNumber(i);
+    }
+    StringBuilder sb = new StringBuilder();
+    currentList.forEach(item -> sb.append(item.getItemName())
+        .append("|")
+        .append(item.getItemName())
+        .append("|")
+        .append(item.getExpireDate().until(Instant.now(), ChronoUnit.DAYS))
+        .append("|")
+        .append(item.getDateEntered())
+        .append("\n"));
+    byte[] contents = sb.toString().getBytes();
+
+    try (OutputStream out = Files.newOutputStream(Paths.get("Inventory.txt"))) {
+      out.write(contents);
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
+  }
+
+  /**
+   * Method to save the {@link List} of {@link Recipe} to file.
+   *
+   * @param recipeList the {@link List} of {@link Recipe} to save
+   */
+  public static void saveRecipesToFile(List<Recipe> recipeList) {
+    List<Recipe> currentList = getRecipesFromFile();
+    currentList.addAll(recipeList);
+
+    StringBuilder sb = new StringBuilder();
+    currentList.forEach(item -> {
+      sb.append(item.getRecipeName());
+      item.getIngredients().forEach(ingredient -> sb.append("|")
+          .append(ingredient.getIngredient())
+          .append(",")
+          .append(ingredient.getQuantity()));
+      sb.append("\n");
+    });
+    byte[] contents = sb.toString().getBytes();
+
+    try (OutputStream out = Files.newOutputStream(Paths.get("Recipes.txt"))) {
+      out.write(contents);
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
   }
 }
