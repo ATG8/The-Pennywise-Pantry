@@ -45,7 +45,7 @@ class AddInventory {
 
     contentPane.add(new PantryLabel("Days:", Font.BOLD, 14, 58, 181, 111, 14));
 
-    PantryTextField expirationDayText = new PantryTextField("Expiration Date...", 179, 178, 162, 20);
+    PantryTextField expirationDayText = new PantryTextField("Days to Expire...", 179, 178, 162, 20);
     contentPane.add(expirationDayText);
 
     //Search Button

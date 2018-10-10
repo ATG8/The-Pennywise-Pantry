@@ -102,7 +102,7 @@ public class PantryFileUtils {
       currentList.get(i - 1).setInventoryNumber(i);
     }
     StringBuilder sb = new StringBuilder();
-    currentList.forEach(item -> sb.append(item.getItemName())
+    currentList.forEach(item -> sb.append(item.getInventoryNumber())
         .append("|")
         .append(item.getItemName())
         .append("|")
