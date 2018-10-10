@@ -13,8 +13,12 @@ import main.gui_elements.PantryPanel;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import main.domain_objects.Inventory;
+import main.domain_objects.Recipe;
 import main.utils.PantryFileUtils;
 
 class ViewRecipesInventory {
@@ -22,7 +26,7 @@ class ViewRecipesInventory {
 	/**
 	 * Create the ViewRecipesInventory frame.
 	 */
-  ViewRecipesInventory() {
+  ViewRecipesInventory(String viewWhat) {
     PantryFrame viewRecipesInventoryGui = new PantryFrame("Pennywise Pantry", 100, 100, 440, 367);
     PantryPanel contentPane = new PantryPanel();
 
@@ -43,21 +47,51 @@ class ViewRecipesInventory {
     });
     contentPane.add(backButton);
 
-    //populate inventory
-    List<Inventory> inventoryList = PantryFileUtils.getInventoryFromFile();
-    StringBuilder sbInventory = new StringBuilder();
-    for(Inventory item : inventoryList){
-        sbInventory.append(item);
-        sbInventory.append("\n");
+    //decide and show what to view
+    //populate both inventory and recipes
+    if(viewWhat.equals("all")){
+        List<Inventory> inventoryList = PantryFileUtils.getInventoryFromFile();
+        List<Recipe> recipeList = PantryFileUtils.getRecipesFromFile();
+        StringBuilder sbInventoryRecipe = new StringBuilder();
+        //add inventory
+        for(Inventory item : inventoryList){
+            sbInventoryRecipe.append(item);
+            sbInventoryRecipe.append("\n");
+        }
+        //add recipes
+        for(Recipe ingredients : recipeList){
+            sbInventoryRecipe.append(ingredients);
+            sbInventoryRecipe.append("\n");
+        }
+        JTextArea displayList = new JTextArea();
+        displayList.setText(sbInventoryRecipe.toString());
+        displayList.setCaretPosition(0);
+
+        JScrollPane scrollPane = new JScrollPane(displayList);
+
+        scrollPane.setBounds(10, 10, 405, 240);
+        contentPane.add(scrollPane);
+    }else{ //only list inventory about to expire
+        List<Inventory> inventoryList = PantryFileUtils.getInventoryFromFile();
+        StringBuilder sbInventoryExpiring = new StringBuilder();
+        for(Inventory item : inventoryList){
+            if (Instant.now()
+                .plus(Duration.of(3, ChronoUnit.DAYS))
+                .isAfter(item.getExpireDate())){
+            sbInventoryExpiring.append(item);
+            sbInventoryExpiring.append("\n");
+            }
+        }
+        JTextArea displayList = new JTextArea();
+        displayList.setText(sbInventoryExpiring.toString());
+        displayList.setCaretPosition(0);
+
+        JScrollPane scrollPane = new JScrollPane(displayList);
+
+        scrollPane.setBounds(10, 10, 405, 240);
+        contentPane.add(scrollPane);
     }
-    JTextArea displayList = new JTextArea();
-    displayList.setText(sbInventory.toString());
-    displayList.setCaretPosition(0);
     
-    JScrollPane scrollPane = new JScrollPane(displayList);
-    
-    scrollPane.setBounds(10, 10, 405, 240);
-    contentPane.add(scrollPane);
 
     viewRecipesInventoryGui.setContentPane(contentPane);
     viewRecipesInventoryGui.display();

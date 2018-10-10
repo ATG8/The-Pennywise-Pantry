@@ -91,9 +91,9 @@ final class SendEmail {
     for (List list : inventoryContents) {
       if (Instant.now()
           .plus(Duration.of(3, ChronoUnit.DAYS))
-          .isAfter(Instant.parse(list.get(4)
+          .isAfter(Instant.parse(list.get(3)
               .toString())
-              .plus(Duration.of(Integer.parseInt(list.get(3).toString()), ChronoUnit.DAYS)))) {
+              .plus(Duration.of(Integer.parseInt(list.get(2).toString()), ChronoUnit.DAYS)))) {
         expiringList.add(list.subList(0, 2));
       }
     }
