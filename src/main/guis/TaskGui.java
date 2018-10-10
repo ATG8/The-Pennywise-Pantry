@@ -15,6 +15,7 @@ import main.gui_elements.PantryPanel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 
 public class TaskGui {
 
@@ -54,15 +55,23 @@ public class TaskGui {
 
     PantryButton addInventoryButton = new PantryButton("Add Inventory Item", 12, 243, 123, 203, 39);
     addInventoryButton.addActionListener(ignored -> {
-      new AddInventory();
-      taskGui.dispose();
+      if(main.PennywisePantryProgram.access){
+        new AddInventory();
+        taskGui.dispose();
+      }else{
+          JOptionPane.showMessageDialog(null, "Sorry, you do not have access to modify inventory!");
+      }
     });
     contentPane.add(addInventoryButton);
 
     PantryButton addRecipesButton = new PantryButton("Add Recipes", 12, 243, 173, 203, 39);
     addRecipesButton.addActionListener(ignored -> {
-      new AddRecipes();
-      taskGui.dispose();
+      if(main.PennywisePantryProgram.access){
+        new AddRecipes();
+        taskGui.dispose();
+      }else{
+          JOptionPane.showMessageDialog(null, "Sorry, you do not have access to modify recipes!");
+      }
     });
     contentPane.add(addRecipesButton);
 

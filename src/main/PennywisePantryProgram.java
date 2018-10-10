@@ -29,6 +29,7 @@ public class PennywisePantryProgram {
   private int attempt = 1;
   private static String email;
   private static List<List<String>> credentialContents = new ArrayList<>();
+  public static boolean access;
 
 
   /**
@@ -72,6 +73,16 @@ public class PennywisePantryProgram {
     return email;
   }
   
+  public boolean setAccess(String username){
+      access = false;
+      for (List list : credentialContents){
+          if(list.get(0).toString().equalsIgnoreCase(username) && Integer.parseInt(list.get(3).toString())==0){
+              access = true;
+          }
+      }
+      return access;
+  }
+  
   private void startGui() {
     PantryFrame loginGui = new PantryFrame("Pennywise Pantry", 100, 100, 431, 367);
     PantryPanel contentPane = new PantryPanel();
@@ -96,7 +107,9 @@ public class PennywisePantryProgram {
       String password = String.valueOf(passwordField.getPassword());
       if (attempt < 3 && validCreds(username, password)) {
         //On successful login, send email
-        //Need to figure out how to create list of expired items here
+        //destroy entered password and set access level
+        password = "";
+        access = setAccess(username);
 
         //get email address from login2dArray
         email = getEmail(username);
