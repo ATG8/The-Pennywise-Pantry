@@ -11,7 +11,7 @@ import java.util.List;
 
 public class PantryComboBox extends JComboBox {
     
-  public PantryComboBox(List<List<String>> uniqueList, int x, int y, int width, int height) {
+  public PantryComboBox(List<String> uniqueList, int x, int y, int width, int height) {
     super(uniqueList.toArray());
     setBounds(x, y, width, height);
   }

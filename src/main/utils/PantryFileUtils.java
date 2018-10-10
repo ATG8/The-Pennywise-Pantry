@@ -71,4 +71,21 @@ public class PantryFileUtils {
     return recipeList;
   }
 
+  /**
+   * Method to create a list of unique entries for use in a combo box.
+   *
+   * @param listType the object type of the list to turn into a list for the combo box
+   * @return the list to use for the combo box
+   */
+  public static List<String> getComboLists(String listType) {
+    List<String> comboList;
+    if (listType.equals("Inventory")) {
+      List<Inventory> inventoryList = getInventoryFromFile();
+      comboList = inventoryList.stream().map(Inventory::getItemName).distinct().collect(Collectors.toList());
+    } else {
+      List<Recipe> recipeList = getRecipesFromFile();
+      comboList = recipeList.stream().map(Recipe::getRecipeName).distinct().collect(Collectors.toList());
+    }
+    return comboList;
+  }
 }
