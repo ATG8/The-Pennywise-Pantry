@@ -106,7 +106,7 @@ public class PantryFileUtils {
         .append("|")
         .append(item.getItemName())
         .append("|")
-        .append(item.getExpireDate().until(Instant.now(), ChronoUnit.DAYS))
+        .append(Instant.now().until(item.getExpireDate(), ChronoUnit.DAYS))
         .append("|")
         .append(item.getDateEntered())
         .append("\n"));

@@ -40,7 +40,7 @@ public class TaskGui {
     viewRecipesAndInventoryButton.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent ignored) {
-        new ViewRecipesInventory();
+        new ViewRecipesInventory("all");
         taskGui.dispose();
       }
     });
@@ -77,7 +77,7 @@ public class TaskGui {
 
     PantryButton listExpiringItemsButton = new PantryButton("List Expiring Items", 12, 243, 223, 203, 39);
     listExpiringItemsButton.addActionListener(ignored -> {
-      new ViewRecipesInventory();
+      new ViewRecipesInventory("expiring");
       taskGui.dispose();
     });
     contentPane.add(listExpiringItemsButton);
