@@ -6,12 +6,15 @@
  */
 package main.utils;
 
+import main.PennywisePantryProgram;
 import main.domain_objects.Inventory;
 import main.domain_objects.Recipe;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -33,9 +36,15 @@ public class PantryFileUtils {
    */
   public static List<Inventory> getInventoryFromFile() {
     List<Inventory> inventoryList = new ArrayList<>();
-    if (Files.exists(Paths.get("Inventory.txt"))) {
+    Path path = null;
+    try {
+      path = Paths.get(PantryFileUtils.class.getClassLoader().getResource("Inventory.txt").toURI());
+    } catch (URISyntaxException ex) {
+      ex.printStackTrace();
+    }
+    if (Files.exists(path)) {
       try {
-        List<String> contents = Files.readAllLines(Paths.get("Inventory.txt"));
+        List<String> contents = Files.readAllLines(path);
         contents.forEach(line -> {
           List<String> lineContents = stream(line.split("\\|")).collect(Collectors.toList());
           long itemNumber = Long.parseLong(lineContents.get(0));
@@ -58,9 +67,15 @@ public class PantryFileUtils {
    */
   public static List<Recipe> getRecipesFromFile() {
     List<Recipe> recipeList = new ArrayList<>();
-    if (Files.exists(Paths.get("Recipes.txt"))) {
+    Path path = null;
+    try {
+      path = Paths.get(PantryFileUtils.class.getClassLoader().getResource("Recipes.txt").toURI());
+    } catch (URISyntaxException ex) {
+      ex.printStackTrace();
+    }
+    if (Files.exists(path)) {
       try {
-        List<String> contents = Files.readAllLines(Paths.get("Recipes.txt"));
+        List<String> contents = Files.readAllLines(path);
         contents.forEach(line -> {
           List<String> lineContents = stream(line.split("\\|")).collect(Collectors.toList());
           List<Recipe.IngredientAndQuantity> ingredients = new ArrayList<>();
@@ -120,7 +135,14 @@ public class PantryFileUtils {
         .append("\n"));
     byte[] contents = sb.toString().getBytes();
 
-    try (OutputStream out = Files.newOutputStream(Paths.get("Inventory.txt"))) {
+    Path path = null;
+    try {
+      path = Paths.get(PantryFileUtils.class.getClassLoader().getResource("Inventory.txt").toURI());
+    } catch (URISyntaxException ex) {
+      ex.printStackTrace();
+    }
+
+    try (OutputStream out = Files.newOutputStream(path)) {
       out.write(contents);
     } catch (IOException ex) {
       ex.printStackTrace();
@@ -147,7 +169,14 @@ public class PantryFileUtils {
     });
     byte[] contents = sb.toString().getBytes();
 
-    try (OutputStream out = Files.newOutputStream(Paths.get("Recipes.txt"))) {
+    Path path = null;
+    try {
+      path = Paths.get(PantryFileUtils.class.getClassLoader().getResource("Recipes.txt").toURI());
+    } catch (URISyntaxException ex) {
+      ex.printStackTrace();
+    }
+
+    try (OutputStream out = Files.newOutputStream(path)) {
       out.write(contents);
     } catch (IOException ex) {
       ex.printStackTrace();
