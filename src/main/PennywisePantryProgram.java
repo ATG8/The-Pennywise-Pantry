@@ -14,7 +14,9 @@ import main.guis.TaskGui;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,9 +52,15 @@ public class PennywisePantryProgram {
    * Method to get a list of valid credentials stored in a file.
    */
   private static void getCredentials() {
-    if (Files.exists(Paths.get("Login.txt"))) {
+    Path path = null;
+    try {
+      path = Paths.get(PennywisePantryProgram.class.getClassLoader().getResource("Login.txt").toURI());
+    } catch (URISyntaxException ex) {
+      ex.printStackTrace();
+    }
+    if (Files.exists(path)) {
       try {
-        List<String> contents = Files.readAllLines(Paths.get("Login.txt"));
+        List<String> contents = Files.readAllLines(path);
         contents.forEach(line -> credentialContents.add(Arrays.stream(line.split("\\|")).collect(Collectors.toList())));
       } catch (IOException e) {
         e.printStackTrace();
