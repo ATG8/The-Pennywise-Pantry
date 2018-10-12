@@ -17,6 +17,9 @@ import static java.awt.Font.PLAIN;
 import static javax.swing.JOptionPane.showMessageDialog;
 import static main.PennywisePantryProgram.access;
 
+/**
+ * Creates the GUI that lists the available tasks.
+ */
 public class TaskGui {
 
   /**

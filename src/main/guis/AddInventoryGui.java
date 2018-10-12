@@ -10,15 +10,18 @@ import main.domain_objects.Inventory;
 import main.gui_elements.*;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.awt.Font.BOLD;
 import static java.awt.Font.PLAIN;
+import static java.time.temporal.ChronoUnit.DAYS;
 import static javax.swing.JOptionPane.showMessageDialog;
 import static main.utils.PantryFileUtils.saveInventoryToFile;
 
+/**
+ * Creates the GUI used to add {@link Inventory}.
+ */
 class AddInventoryGui {
 
   /**
@@ -56,7 +59,7 @@ class AddInventoryGui {
       Instant now = Instant.now();
       int expire = Integer.parseInt(expirationDays);
       for (int i = 0; i < Integer.parseInt(quantity); i++ ) {
-        inventoryList.add(new Inventory(itemName, now, now.plus(expire, ChronoUnit.DAYS)));
+        inventoryList.add(new Inventory(itemName, now, now.plus(expire, DAYS)));
       }
       itemNameText.setText("");
       quantityText.setText("");

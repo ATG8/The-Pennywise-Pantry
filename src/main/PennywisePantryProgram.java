@@ -100,12 +100,12 @@ public class PennywisePantryProgram {
    * @return if the user has privileged access
    */
   private boolean setAccess(String username){
-      access = false;
-      for (List list : credentialContents){
-          if(list.get(0).toString().equalsIgnoreCase(username) && Integer.parseInt(list.get(3).toString())==0){
-              access = true;
-          }
+    access = false;
+    for (List list : credentialContents) {
+      if (list.get(0).toString().equalsIgnoreCase(username) && Integer.parseInt(list.get(3).toString()) == 0) {
+        access = true;
       }
+    }
       return access;
   }
 
@@ -141,10 +141,10 @@ public class PennywisePantryProgram {
 
         email = getEmail(username);
 
-        //pass username and email to EmailSender Class
+        // pass username and email to EmailSender Class
 //        EmailSender expired = new EmailSender(username, email);
 
-        //if username and password are correct then the next GUI is displayed.
+        // if username and password are correct then the next GUI is displayed.
         new TaskGui();
 
         loginGui.dispose();
@@ -152,7 +152,7 @@ public class PennywisePantryProgram {
       } else if (attempt < 3) {
         showMessageDialog(null, "Sorry! Incorrect Username and/or Password. Attempt: " + attempt + " of 3.");
       } else {
-        //Making the text fields unusable and the Login button invisible
+        // Making the text fields unusable and the Login button invisible
         showMessageDialog(null, "Sorry! Incorrect Username and/or Password. Attempt: "
             + attempt
             + " of 3.\n You have reached max attempts and you must restart the program.");

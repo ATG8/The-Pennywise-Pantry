@@ -44,7 +44,6 @@ public class PantryFileUtils {
           Instant expiryDate = dateEntered.plus(expiryDays, DAYS);
           inventoryList.add(new Inventory(itemNumber, lineContents.get(1), dateEntered, expiryDate));
         });
-
       } catch (IOException ex) {
         ex.printStackTrace();
       }
