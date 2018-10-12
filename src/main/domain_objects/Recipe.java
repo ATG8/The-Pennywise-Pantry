@@ -9,7 +9,7 @@ package main.domain_objects;
 import java.util.List;
 
 /**
- * Class to hold a Recipe item.
+ * Holds a Recipe item.
  */
 public class Recipe {
   private String recipeName;
@@ -73,7 +73,7 @@ public class Recipe {
 
 
   /**
-   * Private class to hold a list of ingredients and the quantity needed
+   * Holds a list of ingredients and the quantity needed.
    */
   public static class IngredientAndQuantity {
     private String ingredient;
