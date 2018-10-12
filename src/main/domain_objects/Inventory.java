@@ -9,7 +9,7 @@ package main.domain_objects;
 import java.time.Instant;
 
 /**
- * Class to hold an Inventory item.
+ * Holds an Inventory item.
  */
 public class Inventory {
   private long inventoryNumber;
@@ -21,9 +21,9 @@ public class Inventory {
    * Constructor.
    *
    * @param inventoryNumber the primary key
-   * @param itemName        the name of the inventory item
-   * @param dateEntered     the date the item was entered into the file
-   * @param expireDate      the date the item expires
+   * @param itemName the name of the inventory item
+   * @param dateEntered the date the item was entered into the file
+   * @param expireDate the date the item expires
    */
   public Inventory(long inventoryNumber, String itemName, Instant dateEntered, Instant expireDate) {
     this.inventoryNumber = inventoryNumber;
@@ -35,9 +35,9 @@ public class Inventory {
   /**
    * Constructor.
    *
-   * @param itemName        the name of the inventory item
-   * @param dateEntered     the date the item was entered into the file
-   * @param expireDate      the date the item expires
+   * @param itemName the name of the inventory item
+   * @param dateEntered the date the item was entered into the file
+   * @param expireDate the date the item expires
    */
   public Inventory(String itemName, Instant dateEntered, Instant expireDate) {
     this.itemName = itemName;

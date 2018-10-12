@@ -1,40 +1,39 @@
 /**
- * File: SendEmail
+ * File: EmailSender
  * Group 5: JayElElEm
  * Date: 12 Oct 2018
  * Purpose: CMSC 495 Group Project
  */
 package main;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import main.domain_objects.Inventory;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
-final class SendEmail {
+import static java.time.temporal.ChronoUnit.DAYS;
+import static main.utils.PantryFileUtils.getInventoryFromFile;
 
-  private static List<List<String>> inventoryContents = new ArrayList<>();
-  private static List<List<String>> expiringList = new ArrayList<>();
+/**
+ * Sends an email with a list of expiring inventory to the application user.
+ */
+final class EmailSender {
 
-  // constructor to get username from main
-  SendEmail(String user, String email) {
+  /**
+   * Constructor.
+   *
+   * @param user the user to send the email to
+   * @param email the email address of the user
+   */
+  EmailSender(String user, String email) {
+    List<Inventory> inventoryList = getInventoryFromFile();
 
-    getInventory();
-
-    // set user and email address
-    // declare variables
-
-    // send email to user with list of expired goods
     Properties props = new Properties();
     props.put("mail.smtp.host", "smtp.gmail.com");
     props.put("mail.smtp.socketFactory.port", "465");
@@ -57,12 +56,18 @@ final class SendEmail {
       message.setSubject("Pennywise Pantry - Soon to Expire");
 
       StringBuilder expiringItems = new StringBuilder();
-      for (List<String> item : getExpiring()) {
-        expiringItems.append(item);
-        expiringItems.append("\n");
+      List<Inventory> expiringList = new ArrayList<>();
+      for (Inventory item : inventoryList) {
+        if (Instant.now().plus(Duration.of(3, DAYS)).isAfter(item.getExpireDate())) {
+          expiringList.add(item);
+        }
       }
 
-      if (getExpiring().isEmpty()) {
+      for (Inventory item : expiringList) {
+        expiringItems.append(item);
+      }
+
+      if (expiringItems.toString().isEmpty()) {
         message.setText("Hello " + user + ",\n\n" + "You have no items expiring in the next 3 days.");
       } else {
         message.setText("Hello " + user + ",\n\n" + "Please find your list of pantry items about to expire." + "\n\n"
@@ -74,29 +79,5 @@ final class SendEmail {
     } catch (MessagingException e) {
       throw new RuntimeException(e);
     }
-  }
-
-  private static void getInventory() {
-    if (Files.exists(Paths.get("Inventory.txt"))) {
-      try {
-        List<String> contents = Files.readAllLines(Paths.get("Inventory.txt"));
-        contents.forEach(line -> inventoryContents.add(Arrays.stream(line.split("\\|")).collect(Collectors.toList())));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
-  }
-
-  private List<List<String>> getExpiring() {
-    for (List list : inventoryContents) {
-      if (Instant.now()
-          .plus(Duration.of(3, ChronoUnit.DAYS))
-          .isAfter(Instant.parse(list.get(3)
-              .toString())
-              .plus(Duration.of(Integer.parseInt(list.get(2).toString()), ChronoUnit.DAYS)))) {
-        expiringList.add(list.subList(0, 2));
-      }
-    }
-    return expiringList;
   }
 }
