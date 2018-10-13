@@ -150,7 +150,7 @@ public class PennywisePantryProgram {
         email = getEmail(username);
 
         // pass username and email to EmailSender Class
-//        EmailSender expired = new EmailSender(username, email);
+ //       EmailSender expired = new EmailSender(username, email);
 
         // if username and password are correct then the next GUI is displayed.
         new TaskGui();

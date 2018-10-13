@@ -49,9 +49,11 @@ class ViewInventoryGui {
 
     PantryButton searchButton = new PantryButton("SEARCH", 15, 29, 239, 104, 39);
     searchButton.addActionListener(ignored -> {
+        
+      StringBuilder sbInventory = new StringBuilder();  
+        
       if (viewAllRadio.isSelected()) {
         List<Inventory> inventoryList = getInventoryFromFile();
-        StringBuilder sbInventory = new StringBuilder();
         
         for (Inventory item : inventoryList) {
         sbInventory.append(item);
@@ -70,17 +72,16 @@ class ViewInventoryGui {
           //get combobox selection
           String inventoryValue = listCombo.getSelectedItem().toString();
           List<Inventory> inventoryList = getInventoryFromFile();
-          StringBuilder sbInventoryValue = new StringBuilder();
       
           for (Inventory item : inventoryList) {
               if(item.getItemName().equalsIgnoreCase(inventoryValue)) {
-                sbInventoryValue.append(item);
-                sbInventoryValue.append("\n");
+                sbInventory.append(item);
+                sbInventory.append("\n");
               }
           }
               
           JTextArea displayList = new JTextArea();
-          displayList.setText(sbInventoryValue.toString());
+          displayList.setText(sbInventory.toString());
           displayList.setCaretPosition(0);
 
           JScrollPane scrollPane = new JScrollPane(displayList);

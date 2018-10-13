@@ -52,9 +52,12 @@ class ViewRecipesGui {
 
     PantryButton submitButton = new PantryButton("SUBMIT", 15, 29, 239, 104, 39);
     submitButton.addActionListener(ignored -> {
+        
+        
+      StringBuilder sbRecipes = new StringBuilder();
+        
       if (viewAllRadio.isSelected()) {
         List<Recipe> recipeList = getRecipesFromFile();
-        StringBuilder sbRecipes = new StringBuilder();
         
         for (Recipe item : recipeList) {
         sbRecipes.append(item);
@@ -73,17 +76,16 @@ class ViewRecipesGui {
           //get combobox selection
           String recipeValue = listCombo.getSelectedItem().toString();
           List<Recipe> recipeList = getRecipesFromFile();
-          StringBuilder sbRecipeValue = new StringBuilder();
       
           for (Recipe item : recipeList) {
               if(item.getRecipeName().equalsIgnoreCase(recipeValue)) {
-                sbRecipeValue.append(item);
-                sbRecipeValue.append("\n");
+                sbRecipes.append(item);
+                sbRecipes.append("\n");
               }
           }
               
           JTextArea displayList = new JTextArea();
-          displayList.setText(sbRecipeValue.toString());
+          displayList.setText(sbRecipes.toString());
           displayList.setCaretPosition(0);
 
           JScrollPane scrollPane = new JScrollPane(displayList);
