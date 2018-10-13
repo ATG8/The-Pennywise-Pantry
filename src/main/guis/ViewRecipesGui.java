@@ -6,6 +6,7 @@
  */
 package main.guis;
 
+import java.awt.Dimension;
 import main.domain_objects.Recipe;
 import main.gui_elements.*;
 import main.utils.PantryFileUtils;
@@ -15,7 +16,11 @@ import java.util.List;
 
 import static java.awt.Font.BOLD;
 import static java.awt.Font.PLAIN;
+import static javax.swing.JOptionPane.showMessageDialog;
+import main.domain_objects.Inventory;
 import static main.utils.PantryFileUtils.getComboLists;
+import static main.utils.PantryFileUtils.getInventoryFromFile;
+import static main.utils.PantryFileUtils.getRecipesFromFile;
 
 /**
  * Creates the GUI used to view the {@link Recipe}s.
@@ -42,14 +47,52 @@ class ViewRecipesGui {
     contentPane.add(searchRadio);
 
     List<String> myList = getComboLists("Recipes");
-    contentPane.add(new PantryComboBox(myList, 173, 160, 154, 20));
+    PantryComboBox listCombo = new PantryComboBox(myList, 173, 160, 154, 20);
+    contentPane.add(listCombo);
 
     PantryButton submitButton = new PantryButton("SUBMIT", 15, 29, 239, 104, 39);
     submitButton.addActionListener(ignored -> {
+        
+        
+      StringBuilder sbRecipes = new StringBuilder();
+        
       if (viewAllRadio.isSelected()) {
-        List<Recipe> recipeList = PantryFileUtils.getRecipesFromFile();
-        recipeList.forEach(System.out::println);
-      }
+        List<Recipe> recipeList = getRecipesFromFile();
+        
+        for (Recipe item : recipeList) {
+        sbRecipes.append(item);
+        sbRecipes.append("\n");
+        }
+        
+        JTextArea displayList = new JTextArea();
+        displayList.setText(sbRecipes.toString());
+        displayList.setCaretPosition(0);
+
+        JScrollPane scrollPane = new JScrollPane(displayList);
+        scrollPane.setPreferredSize(new Dimension(405, 240));
+        
+        showMessageDialog(null, scrollPane);
+        }else{
+          //get combobox selection
+          String recipeValue = listCombo.getSelectedItem().toString();
+          List<Recipe> recipeList = getRecipesFromFile();
+      
+          for (Recipe item : recipeList) {
+              if(item.getRecipeName().equalsIgnoreCase(recipeValue)) {
+                sbRecipes.append(item);
+                sbRecipes.append("\n");
+              }
+          }
+              
+          JTextArea displayList = new JTextArea();
+          displayList.setText(sbRecipes.toString());
+          displayList.setCaretPosition(0);
+
+          JScrollPane scrollPane = new JScrollPane(displayList);
+          scrollPane.setPreferredSize(new Dimension(405, 240));
+
+          showMessageDialog(null, scrollPane);
+        }
     });
     contentPane.add(submitButton);
 

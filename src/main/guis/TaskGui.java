@@ -81,7 +81,7 @@ public class TaskGui {
     });
     contentPane.add(listExpiringItemsButton);
 
-    PantryButton backButton = new PantryButton("BACK", 12, 10, 273, 203, 39);
+    PantryButton backButton = new PantryButton("LOGOUT AND CLOSE", 12, 10, 273, 203, 39);
     backButton.addActionListener(ignored -> {
       new PennywisePantryProgram();
       taskGui.dispose();
