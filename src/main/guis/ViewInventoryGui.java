@@ -6,6 +6,7 @@
  */
 package main.guis;
 
+import java.awt.Dimension;
 import main.domain_objects.Inventory;
 import main.gui_elements.*;
 import main.utils.PantryFileUtils;
@@ -15,7 +16,9 @@ import java.util.List;
 
 import static java.awt.Font.BOLD;
 import static java.awt.Font.PLAIN;
+import static javax.swing.JOptionPane.showMessageDialog;
 import static main.utils.PantryFileUtils.getComboLists;
+import static main.utils.PantryFileUtils.getInventoryFromFile;
 
 /**
  * Creates the GUI used to view the {@link Inventory}.
@@ -41,14 +44,50 @@ class ViewInventoryGui {
     buttonGroup.add(searchRadio);
     contentPane.add(searchRadio);
     List<String> myList = getComboLists("Inventory");
-    contentPane.add(new PantryComboBox(myList, 173, 159, 154, 20));
+    PantryComboBox listCombo = new PantryComboBox(myList, 173, 159, 154, 20);
+    contentPane.add(listCombo);
 
     PantryButton searchButton = new PantryButton("SEARCH", 15, 29, 239, 104, 39);
     searchButton.addActionListener(ignored -> {
       if (viewAllRadio.isSelected()) {
-        List<Inventory> inventoryList = PantryFileUtils.getInventoryFromFile();
-        inventoryList.forEach(System.out::println);
-      }
+        List<Inventory> inventoryList = getInventoryFromFile();
+        StringBuilder sbInventory = new StringBuilder();
+        
+        for (Inventory item : inventoryList) {
+        sbInventory.append(item);
+        sbInventory.append("\n");
+        }
+        
+        JTextArea displayList = new JTextArea();
+        displayList.setText(sbInventory.toString());
+        displayList.setCaretPosition(0);
+
+        JScrollPane scrollPane = new JScrollPane(displayList);
+        scrollPane.setPreferredSize(new Dimension(405, 240));
+        
+        showMessageDialog(null, scrollPane);
+        }else{
+          //get combobox selection
+          String inventoryValue = listCombo.getSelectedItem().toString();
+          List<Inventory> inventoryList = getInventoryFromFile();
+          StringBuilder sbInventoryValue = new StringBuilder();
+      
+          for (Inventory item : inventoryList) {
+              if(item.getItemName().equalsIgnoreCase(inventoryValue)) {
+                sbInventoryValue.append(item);
+                sbInventoryValue.append("\n");
+              }
+          }
+              
+          JTextArea displayList = new JTextArea();
+          displayList.setText(sbInventoryValue.toString());
+          displayList.setCaretPosition(0);
+
+          JScrollPane scrollPane = new JScrollPane(displayList);
+          scrollPane.setPreferredSize(new Dimension(405, 240));
+
+          showMessageDialog(null, scrollPane);
+        }
     });
     contentPane.add(searchButton);
 
